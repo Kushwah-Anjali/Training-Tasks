@@ -1,11 +1,11 @@
 
 import './App.css';
-import GoogleMap from './components/GoogleMap';
+import GoogleMapTask from './components/GoogleMapTask';
 
 function App() {
   return (
   <>
-  <GoogleMap/>
+  <GoogleMapTask/>
     </>
   );
 }

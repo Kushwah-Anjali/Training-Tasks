@@ -1,9 +1,9 @@
 import "./App.css";
-import GoogleMapTask from "./components/GoogleMapTask";
+import Home from "./components/Home";
 function App() {
   return (
     <>
-      <GoogleMapTask /> 
+      <Home/> 
     
     </>
   );

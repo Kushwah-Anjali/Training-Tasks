@@ -38,15 +38,44 @@ function Home() {
   });
   const markerDragOffset = useRef({ x: 0, y: 0 });
   const infoBoxRef = useRef(null);
+  const startLatLngRef = useRef(null);
+  const targetLatLngRef = useRef(null);
+  const animateRef = useRef(null);
+  const animateStartTimeRef = useRef(null);
   const HandleMapClick = (event) => {
     const lat = event.latLng.lat();
     const lng = event.latLng.lng();
     const clamped = clampLatLngValues(lat, lng);
-    setMarkerPosition(clamped);
+    startLatLngRef.current = markerPosition;
+    targetLatLngRef.current = clamped;
+    if (animateRef.current) {
+      cancelAnimationFrame(animateRef.current);
+    }
+    animateStartTimeRef.current = performance.now();
+    animateRef.current = requestAnimationFrame(animateMarker);
+    // setMarkerPosition(clamped);
     setLatInput(clamped.lat);
     setLngInput(clamped.lng);
   };
-
+  function animateMarker() {
+    const start = startLatLngRef.current;
+    const target = targetLatLngRef.current;
+    const duration = 300; // ms
+    const currentTime = performance.now();
+    const progress = Math.min(
+      (currentTime - animateStartTimeRef.current) / duration,
+      1
+    );
+    if (progress < 1) {
+      const currentLat = start.lat + (target.lat - start.lat) * progress;
+      const currentLng = start.lng + (target.lng - start.lng) * progress;
+      setMarkerPosition({ lat: currentLat, lng: currentLng });
+      animateRef.current = requestAnimationFrame(animateMarker);
+    } else {
+      cancelAnimationFrame(animateRef.current);
+      setMarkerPosition(target);
+    }
+  }
   const HandleGoClick = () => {
     if (lngInput < -180 || lngInput > 180) {
       alert("Longitude out of range");

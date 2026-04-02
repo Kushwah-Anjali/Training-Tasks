@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { GoogleMap, LoadScript, OverlayView } from "@react-google-maps/api";
 import InfoBox from "./InfoBox";
-import { FaUndo, FaPalette } from "react-icons/fa";
+import { FaUndo } from "react-icons/fa";
 import markersData from "./MarkersInfo";
 import TrackerTableHome from "./TrackerTableHome";
+import centerIcon from "../assets/centerIcon.png";
 const API_KEY = process.env.REACT_APP_GRAPHHOPPER_KEY;
 function Home() {
   const containerstyle = {
@@ -37,8 +38,6 @@ function Home() {
   const startLatLngRef = useRef({});
   const targetLatLngRef = useRef({});
   const polylineRef = useRef({});
-  // const [colorPicker, setColorPicker] = useState("#b93f3f");
-  // const colorPickerRef = useRef(null);
   const angleRef = useRef({});
   const [markers, setMarkers] = useState(
     markersData.map((m, idx) => ({
@@ -269,7 +268,7 @@ function Home() {
       polylineRef.current[id].setMap(null);
       polylineRef.current[id] = null;
     }
-    const marker = markers.find((m) => m.id == id);
+    const marker = markers.find((m) => m.id === id);
     if (!marker) return;
     if (!mapRef.current) return;
     const line = new window.google.maps.Polyline({
@@ -282,9 +281,6 @@ function Home() {
     line.setMap(mapRef.current);
     polylineRef.current[id] = line;
   }
-  // function polylineColor() {
-  //     colorPickerRef.current.click();
-  // }
   const HandleGoClick = () => {
     if (lngInput < -180 || lngInput > 180) {
       alert("Longitude out of range");
@@ -307,7 +303,7 @@ function Home() {
     setLngInput(parseFloat(event.target.value));
   };
   const handleMarkerMouseDown = (e, id) => {
-    if (id != activeMarkerId) return;
+    if (id !== activeMarkerId) return;
     const marker = markers.find((m) => m.id === id);
     if (!marker) return;
     didMarkerDrag.current = false;
@@ -344,7 +340,6 @@ function Home() {
     const rect = mapDiv.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
-    // ===== AUTO PAN LOGIC =====
     const EDGE_THRESHOLD = 30; // px
     const PAN_SPEED = 8; // px per frame
     let panX = 0;
@@ -357,9 +352,6 @@ function Home() {
     else if (mouseY > rect.height - EDGE_THRESHOLD) panY = PAN_SPEED;
 
     if (panX || panY) mapRef.current.panBy(panX, panY);
-
-    // ===== END AUTO PAN =====
-
     const point = new window.google.maps.Point(
       mouseX - markerDragOffset.current.x,
       mouseY - markerDragOffset.current.y
@@ -382,10 +374,8 @@ function Home() {
   };
   useEffect(() => {
     if (!markerDragging) return;
-
     window.addEventListener("mousemove", HandleMarkerDragMove);
     window.addEventListener("mouseup", handleMarkerMouseUp);
-
     return () => {
       window.removeEventListener("mousemove", HandleMarkerDragMove);
       window.removeEventListener("mouseup", handleMarkerMouseUp);
@@ -783,21 +773,10 @@ function Home() {
                   >
                     Search Lat & Lng
                   </span>
-                  {/* <>
-                                        <input type="color" style={{ display: "none" }} value={colorPicker} ref={colorPickerRef} onChange={(e) => {
-                                            const newColor = e.target.value;
-                                            setColorPicker(newColor);
-                                            if (polylineRef.current) {
-                                                polylineRef.current.setOptions({ strokeColor: newColor });
-                                            }
-                                        }} />
-                                    </> */}
-                  {/* <span onClick={polylineColor} onMouseDown={(e) => { e.stopPropagation() }} style={{ cursor: "pointer" }}
-                                        className=" ms-3"><FaPalette></FaPalette></span>
-                                */}
-                  <span className="ms-3">
-                    <img
-                      src="https://icons.iconarchive.com/icons/icons8/ios7/128/Maps-Center-Direction-icon.png"
+                  <span className="ms-5">
+                    <img 
+                      src={centerIcon}
+                      alt="center"
                       style={{
                         width: "25px",
                         height: "25px",
@@ -812,7 +791,7 @@ function Home() {
                       draggable={false}
                     />
                   </span>
-                </div>{" "}
+                </div>
                 <div className="card-body px-3 py-2">
                   <div className="mb-2">
                     <div className="input-group input-group-sm">

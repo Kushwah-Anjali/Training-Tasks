@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c9648550.css",
+    "main.js": "/static/js/main.827fa7e9.js",
+    "static/media/greymarker.png": "/static/media/greymarker.64f6fca6c4d6732fc200.png",
+    "static/media/purplemarker.png": "/static/media/purplemarker.e971e650c78c38665cc4.png",
+    "static/media/pinkmarker.png": "/static/media/pinkmarker.ea96982e6eb4ca0aec26.png",
+    "static/media/greenmarker.png": "/static/media/greenmarker.d4224fdaf76f97c548ac.png",
+    "static/media/marker.png": "/static/media/marker.964392876da480504a64.png",
+    "static/media/lightgreenmarker.png": "/static/media/lightgreenmarker.c3dcd0b91f199925935a.png",
+    "static/media/bluemarker.png": "/static/media/bluemarker.fcb60360bd8bd870fda1.png",
+    "static/media/orangemarker.png": "/static/media/orangemarker.139c65b0b0b31bef4c87.png",
+    "static/media/redmarker.png": "/static/media/redmarker.0d04f63b12d0b9638e5b.png",
+    "index.html": "/index.html",
+    "main.c9648550.css.map": "/static/css/main.c9648550.css.map",
+    "main.827fa7e9.js.map": "/static/js/main.827fa7e9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c9648550.css",
+    "static/js/main.827fa7e9.js"
+  ]
+}
